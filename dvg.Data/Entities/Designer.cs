@@ -19,5 +19,7 @@ namespace dvg.Data.Entities
         public DesignerPosition Position { get; set; }
 
         public ICollection<Project> Projects { get; set; }
+        public ICollection<Client> Clients { get; set; }
+
     }
 }

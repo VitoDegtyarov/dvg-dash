@@ -1,6 +1,17 @@
-﻿namespace dvg.Data.Entities
+﻿using dvg.Core.Enums;
+
+namespace dvg.Data.Entities
 {
-    public class Project
+    public class Project : BaseEntity
     {
+        public string Title { get; set; }
+
+        public DateTime Term { get; set; }
+        public decimal Cost { get; set; }
+
+        public ProjectStatus Status { get; set; }
+
+        public ICollection<Designer> PerformersDesigner { get; set; }
+        public ICollection<CustomTask> Tasks { get; set; }
     }
 }
