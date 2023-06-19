@@ -14,6 +14,10 @@ namespace dvg.Data
                 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+        }
 
     }
 }
