@@ -16,8 +16,58 @@ namespace dvg.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            SetTestData(modelBuilder);
         }
 
+        private void SetTestData(ModelBuilder modelBuilder)
+        {
+            List<Designer> designers = new List<Designer>
+            {
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    FirstName = "Kate",
+                    LastName = "Ivanka",
+                    PhoneNumber = "+380991002030",
+                    Position = Core.Enums.DesignerPosition.Senior
+
+                },
+
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    FirstName = "Valeria",
+                    LastName = "Wayne",
+                    PhoneNumber = "+380661003040",
+                    Position = Core.Enums.DesignerPosition.Middle
+                }
+            };
+
+            List<Client> clients = new List<Client>
+            {
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    FirstName = "Alex",
+                    LastName = "Freeman",
+                    PhoneNumber = "+380939876532"
+                },
+
+                new()
+                {
+                    Id = Guid.NewGuid(),
+                    CreateDate = DateTime.Now,
+                    FirstName = "Igor",
+                    LastName = "Kowalski",
+                    PhoneNumber = "+380631234567"
+                }
+            };
+
+            modelBuilder.Entity<Designer>().HasData(designers);
+            modelBuilder.Entity<Client>().HasData(clients);
+        }
     }
 }

@@ -9,10 +9,9 @@ namespace dvg.Data.Entities
         [Column(TypeName = "varchar(300)")]
         public string FirstName { get; set; }
 
-        [Required]
         [Column(TypeName = "varchar(300)")]
         public string LastName { get; set; }
 
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

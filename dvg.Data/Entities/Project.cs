@@ -11,6 +11,7 @@ namespace dvg.Data.Entities
 
         public ProjectStatus Status { get; set; }
 
+        public ICollection<Client> Clients { get; set; }
         public ICollection<Designer> Attendees { get; set; }
         public ICollection<CustomTask> Tasks { get; set; }
     }
