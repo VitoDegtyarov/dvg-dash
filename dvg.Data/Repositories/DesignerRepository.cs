@@ -16,10 +16,5 @@ namespace dvg.Data.Repositories
         {
             return await _context.Designers.ToListAsync();
         }
-
-        public override Task<Designer> InsertAsync(Designer entity)
-        {
-            return base.InsertAsync(entity);
-        }
     }
 }

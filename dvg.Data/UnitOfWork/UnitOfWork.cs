@@ -1,9 +1,4 @@
 ﻿using dvg.Data.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace dvg.Data.UnitOfWork
 {
@@ -22,7 +17,7 @@ namespace dvg.Data.UnitOfWork
             _designerRepository = designerRepository;
         }
 
-        public IDesignerRepository Designer => _designerRepository.Value;
+        public IDesignerRepository DesignerRepository => _designerRepository.Value;
         public void SaveChanges()
         {
             _context.SaveChanges();

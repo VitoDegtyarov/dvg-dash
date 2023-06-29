@@ -4,6 +4,8 @@ namespace dvg.Services.Interfaces
 {
     public interface IDesignerServices
     {
-        Task Create(DesignerDTO designer);
+        Task InsertAsync(DesignerDTO designer);
+
+        Task<List<DesignerDTO>> GetAllAsync();
     }
 }

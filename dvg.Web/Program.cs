@@ -1,4 +1,10 @@
 using dvg.Data;
+using dvg.Data.Repositories;
+using dvg.Data.Repositories.Interfaces;
+using dvg.Data.UnitOfWork;
+using dvg.Mappers;
+using dvg.Services;
+using dvg.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace dvg.Web
@@ -14,6 +20,18 @@ namespace dvg.Web
 
             builder.Services.AddDbContext<ApplicationContext>(options =>
                     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IDesignerRepository, DesignerRepository>();
+            builder.Services.AddScoped<Lazy<IDesignerRepository>>(provider =>
+            {
+                return new Lazy<IDesignerRepository>(() => provider.GetRequiredService<IDesignerRepository>());
+            });
+
+            builder.Services.AddScoped<IDesignerServices, DesignerServices>();
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            builder.Services.AddAutoMapper(typeof(AppMappingProfile));
 
             var app = builder.Build();
 

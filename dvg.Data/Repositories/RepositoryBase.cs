@@ -11,16 +11,15 @@ namespace dvg.Data.Repositories
         {
             _context = context;
         }
-        public virtual async Task<TEntity> InsertAsync(TEntity entity)
+        public async Task InsertAsync(TEntity entity)
         {
             await _context.Set<TEntity>().AddAsync(entity);
 
-            return entity;
         }
 
         public async Task Delete(TEntity entityToDelete)
         {
-            _context.Set<TEntity>().Remove(entityToDelete);
+              _context.Set<TEntity>().Remove(entityToDelete);
         }
 
         public async Task<List<TEntity>> GetAllAsync()

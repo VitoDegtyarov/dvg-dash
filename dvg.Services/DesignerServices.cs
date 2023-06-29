@@ -10,14 +10,31 @@ namespace dvg.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+
         public DesignerServices(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public async Task Create(DesignerDTO designerDTO)
+
+        public async Task<List<DesignerDTO>> GetAllAsync()
         {
-            await _unitOfWork.Designer.InsertAsync(_mapper.Map<Designer>(designerDTO));
+            var data = await _unitOfWork.DesignerRepository.GetAllAsync();
+
+            List<DesignerDTO> result = _mapper.Map<List<DesignerDTO>>(data);
+
+            return result;
         }
+        public async Task InsertAsync(DesignerDTO designerDTO)
+        {
+            var designerEntity = _mapper.Map<Designer>(designerDTO);
+
+            await _unitOfWork.DesignerRepository.InsertAsync(designerEntity);
+
+            _unitOfWork.SaveChanges();
+
+        }
+
+
     }
 }

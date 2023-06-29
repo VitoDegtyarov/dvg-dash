@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\dvg.Data\dvg.Data.csproj" />
+    <ProjectReference Include="..\dvg.Mappers\dvg.Mappers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

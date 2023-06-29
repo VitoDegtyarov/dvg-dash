@@ -4,7 +4,7 @@ namespace dvg.Data.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        IDesignerRepository Designer { get; }
+        IDesignerRepository DesignerRepository { get; }
 
         public void SaveChanges();
     }
