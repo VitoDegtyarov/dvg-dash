@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using dvg.Data.Entities;
+using dvg.Data.Repositories;
+using dvg.Data.Repositories.Interfaces;
 using dvg.Data.UnitOfWork;
 using dvg.Services.DTO;
 using dvg.Services.Interfaces;
@@ -25,6 +27,16 @@ namespace dvg.Services
 
             return result;
         }
+
+        public async Task<DesignerDTO> GetByIdAsync(Guid id)
+        {
+            var data = await _unitOfWork.DesignerRepository.GetByIdAsync(id);
+
+            var result = _mapper.Map<DesignerDTO>(data);
+
+            return result;
+        }
+
         public async Task InsertAsync(DesignerDTO designerDTO)
         {
             var designerEntity = _mapper.Map<Designer>(designerDTO);

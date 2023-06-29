@@ -7,5 +7,6 @@ namespace dvg.Services.Interfaces
         Task InsertAsync(DesignerDTO designer);
 
         Task<List<DesignerDTO>> GetAllAsync();
+        Task<DesignerDTO> GetByIdAsync(Guid id);
     }
 }

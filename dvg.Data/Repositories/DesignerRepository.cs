@@ -16,5 +16,10 @@ namespace dvg.Data.Repositories
         {
             return await _context.Designers.ToListAsync();
         }
+
+        public async Task<Designer> GetByIdAsync(Guid id)
+        {
+            return await _context.Designers.FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

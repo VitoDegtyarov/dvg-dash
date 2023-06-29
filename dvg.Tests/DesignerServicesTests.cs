@@ -21,7 +21,7 @@ namespace dvg.Tests
         }
 
         [Fact]
-        public async void GetAllDesigner()
+        public async Task GetAllDesigner()
         {
             _unitOfWorkMock.Setup(repo => repo.DesignerRepository.GetAllAsync())
                                     .ReturnsAsync(new List<Designer>()
@@ -30,30 +30,75 @@ namespace dvg.Tests
                                         new Designer { FirstName = "Boby", LastName = "Sinclar"}
                                     });
 
-            //Act
             List<DesignerDTO> result = await _designerService.GetAllAsync();
 
-            //Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Count);
             Assert.Equal("John", result[0].FirstName);
         }
 
         [Fact]
-        public async Task InsertAsync_DesignerDTO()
+        public async Task GetDesignerByID()
         {
-            var designerDTO = new DesignerDTO { 
-                FirstName = "Kevin", 
-                LastName = "McCallister" , 
-                Position = Core.Enums.DesignerPosition.Trainee, 
+            Designer testData = new Designer
+            {
+                FirstName = "Alice",
+                LastName = "Kotik",
+                Id = new Guid()
+            };
+
+            _unitOfWorkMock.Setup(repo => repo.DesignerRepository.GetByIdAsync(testData.Id))
+                                    .ReturnsAsync(testData);
+
+            var result = await _designerService.GetByIdAsync(testData.Id);
+
+            Assert.Equal(testData.FirstName, result.FirstName);
+        }
+
+        [Fact]
+        public async Task GetDesignerByID_WithNullValue()
+        {
+            Guid id = Guid.Empty;
+
+            _unitOfWorkMock.Setup(repo => repo.DesignerRepository.GetByIdAsync(id))
+                                    .ReturnsAsync((Designer)null);
+
+            var result = await _designerService.GetByIdAsync(id);
+
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task InsertAsync()
+        {
+            _unitOfWorkMock.Setup(uow => uow.DesignerRepository.InsertAsync(It.IsAny<Designer>()))
+                                    .Returns(Task.CompletedTask);
+
+            var designerDTO = new DesignerDTO
+            {
+                FirstName = "Kevin",
+                LastName = "McCallister",
+                Position = Core.Enums.DesignerPosition.Trainee,
                 PhoneNumber = "+380987894512"
             };
 
-            //Act
-             await _designerService.InsertAsync(designerDTO);
+            await _designerService.InsertAsync(designerDTO);
 
-            //Assert
-            Assert.NotNull(designerDTO);
+            _unitOfWorkMock.Verify(uow => uow.DesignerRepository.InsertAsync(It.IsAny<Designer>()), Times.Once);
+
+        }
+
+        [Fact]
+        public async Task InsertAsync_WithNullValue()
+        {
+            DesignerDTO designerDTO = null;
+
+            _unitOfWorkMock.Setup(uow => uow.DesignerRepository.InsertAsync(It.IsNotNull<Designer>()))
+                                   .Throws<InvalidOperationException>();
+
+            await _designerService.InsertAsync(designerDTO);
+
+            _unitOfWorkMock.Verify(uow => uow.DesignerRepository.InsertAsync(It.IsNotNull<Designer>()), Times.Never());
         }
     }
 }
