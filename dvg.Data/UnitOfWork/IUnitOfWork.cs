@@ -6,6 +6,6 @@ namespace dvg.Data.UnitOfWork
     {
         IDesignerRepository DesignerRepository { get; }
 
-        public void SaveChanges();
+        Task SaveChanges();
     }
 }

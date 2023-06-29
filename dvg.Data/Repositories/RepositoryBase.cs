@@ -17,7 +17,7 @@ namespace dvg.Data.Repositories
 
         }
 
-        public async Task Delete(TEntity entityToDelete)
+        public void Delete(TEntity entityToDelete)
         {
               _context.Set<TEntity>().Remove(entityToDelete);
         }
@@ -27,7 +27,7 @@ namespace dvg.Data.Repositories
             return await _context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task UpdateAsync(TEntity entityToUpdate)
+        public void UpdateAsync(TEntity entityToUpdate)
         {
             _context.Set<TEntity>().Update(entityToUpdate);
         }

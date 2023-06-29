@@ -61,7 +61,7 @@ namespace dvg.Tests
             Guid id = Guid.Empty;
 
             _unitOfWorkMock.Setup(repo => repo.DesignerRepository.GetByIdAsync(id))
-                                    .ReturnsAsync((Designer)null);
+                                    .ReturnsAsync((Designer?)null);
 
             var result = await _designerService.GetByIdAsync(id);
 
@@ -91,7 +91,7 @@ namespace dvg.Tests
         [Fact]
         public async Task InsertAsync_WithNullValue()
         {
-            DesignerDTO designerDTO = null;
+            DesignerDTO? designerDTO = null;
 
             _unitOfWorkMock.Setup(uow => uow.DesignerRepository.InsertAsync(It.IsNotNull<Designer>()))
                                    .Throws<InvalidOperationException>();
@@ -100,5 +100,20 @@ namespace dvg.Tests
 
             _unitOfWorkMock.Verify(uow => uow.DesignerRepository.InsertAsync(It.IsNotNull<Designer>()), Times.Never());
         }
+
+        [Fact]
+        public async Task DeleteDesignerAsync()
+        {
+            var designerDTO = new DesignerDTO { FirstName = "John Doe" };
+            //var designer = _mapper.Map<Designer>(designerDTO);
+
+            _unitOfWorkMock.SetupGet(uow => uow.DesignerRepository).Returns(Mock.Of<IDesignerRepository>());
+
+            await _designerService.DeleteDesignerAsync(designerDTO);
+
+            _unitOfWorkMock.Verify(uow => uow.DesignerRepository.Delete(It.IsAny<Designer>()), Times.Once);
+            _unitOfWorkMock.Verify(uow => uow.SaveChanges(), Times.Once);
+        }
     }
+    
 }

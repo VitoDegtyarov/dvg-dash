@@ -37,14 +37,18 @@ namespace dvg.Services
             return result;
         }
 
-        public async Task InsertAsync(DesignerDTO designerDTO)
+        public async Task InsertAsync(DesignerDTO? designerDTO)
         {
-            var designerEntity = _mapper.Map<Designer>(designerDTO);
+            await _unitOfWork.DesignerRepository.InsertAsync(_mapper.Map<Designer>(designerDTO));
 
-            await _unitOfWork.DesignerRepository.InsertAsync(designerEntity);
+            await _unitOfWork.SaveChanges();
+        }
 
-            _unitOfWork.SaveChanges();
+        public async Task DeleteDesignerAsync(DesignerDTO designerDTO)
+        {
+            _unitOfWork.DesignerRepository.Delete(_mapper.Map<Designer>(designerDTO));
 
+            await _unitOfWork.SaveChanges();
         }
 
 
