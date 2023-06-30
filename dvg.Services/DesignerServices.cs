@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using dvg.Data.Entities;
-using dvg.Data.Repositories;
-using dvg.Data.Repositories.Interfaces;
 using dvg.Data.UnitOfWork;
 using dvg.Services.DTO;
 using dvg.Services.Interfaces;
+using Serilog;
 
 namespace dvg.Services
 {
@@ -12,11 +11,14 @@ namespace dvg.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public DesignerServices(IUnitOfWork unitOfWork, IMapper mapper)
+        public DesignerServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _logger = logger;
+            
         }
 
         public async Task<List<DesignerDTO>> GetAllAsync()
@@ -39,18 +41,23 @@ namespace dvg.Services
 
         public async Task InsertAsync(DesignerDTO? designerDTO)
         {
-            await _unitOfWork.DesignerRepository.InsertAsync(_mapper.Map<Designer>(designerDTO));
+            if (designerDTO != null)
+            {
+                await _unitOfWork.DesignerRepository.InsertAsync(_mapper.Map<Designer>(designerDTO));
+
+                _logger.Information($"Added to DB:  Name:{designerDTO.FirstName} - {designerDTO.LastName}");
+            }
 
             await _unitOfWork.SaveChanges();
         }
 
         public async Task DeleteDesignerAsync(DesignerDTO designerDTO)
         {
-            _unitOfWork.DesignerRepository.Delete(_mapper.Map<Designer>(designerDTO));
+             _unitOfWork.DesignerRepository.Delete(_mapper.Map<Designer>(designerDTO));
 
             await _unitOfWork.SaveChanges();
+
+            _logger.Information($"Delete from DB: Name: {designerDTO.FirstName} - {designerDTO.LastName}");
         }
-
-
     }
 }

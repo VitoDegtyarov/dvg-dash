@@ -1,10 +1,13 @@
+using Serilog;
+
 namespace dvg.Tests
 {
     public class DesignerServicesTests
     {
-        private readonly Mock<IUnitOfWork> _unitOfWorkMock;
+        private readonly ILogger _logger;
         private readonly IMapper _mapper;
         private readonly DesignerServices _designerService;
+        private readonly Mock<IUnitOfWork> _unitOfWorkMock;
 
         public DesignerServicesTests()
         {
@@ -13,11 +16,15 @@ namespace dvg.Tests
                 cfg.AddProfile<AppMappingProfile>();
             });
 
+            _logger = new LoggerConfiguration()
+                .CreateLogger();
+
             _mapper = mapperConfig.CreateMapper();
 
             _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-            _designerService = new DesignerServices(_unitOfWorkMock.Object, _mapper);
+            _designerService = new DesignerServices(_unitOfWorkMock.Object, _mapper, _logger);
+
         }
 
         [Fact]
@@ -104,8 +111,7 @@ namespace dvg.Tests
         [Fact]
         public async Task DeleteDesignerAsync()
         {
-            var designerDTO = new DesignerDTO { FirstName = "John Doe" };
-            //var designer = _mapper.Map<Designer>(designerDTO);
+            var designerDTO = new DesignerDTO { FirstName = "John", LastName = "Doe" };
 
             _unitOfWorkMock.SetupGet(uow => uow.DesignerRepository).Returns(Mock.Of<IDesignerRepository>());
 
@@ -114,6 +120,7 @@ namespace dvg.Tests
             _unitOfWorkMock.Verify(uow => uow.DesignerRepository.Delete(It.IsAny<Designer>()), Times.Once);
             _unitOfWorkMock.Verify(uow => uow.SaveChanges(), Times.Once);
         }
+
     }
-    
+
 }

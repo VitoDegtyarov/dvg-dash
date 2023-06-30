@@ -6,6 +6,7 @@ using dvg.Mappers;
 using dvg.Services;
 using dvg.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace dvg.Web
 {
@@ -15,7 +16,19 @@ namespace dvg.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            builder.Logging.ClearProviders();
+            builder.Logging.AddSerilog(logger);
+
+            
             // Add services to the container.
+            builder.Services.AddSingleton<Serilog.ILogger>(logger);
+            
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<ApplicationContext>(options =>
@@ -54,7 +67,12 @@ namespace dvg.Web
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
+            logger.Information("App run");
+
             app.Run();
+
+            
+
         }
     }
 }
