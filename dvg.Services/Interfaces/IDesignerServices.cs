@@ -1,4 +1,4 @@
-﻿using dvg.Services.DTO;
+﻿using dvg.DTO;
 
 namespace dvg.Services.Interfaces
 {

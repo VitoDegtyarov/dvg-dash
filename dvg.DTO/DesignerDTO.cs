@@ -1,6 +1,6 @@
 ﻿using dvg.Core.Enums;
 
-namespace dvg.Services.DTO
+namespace dvg.DTO
 {
     public class DesignerDTO
     {

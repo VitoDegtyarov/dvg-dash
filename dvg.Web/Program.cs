@@ -21,14 +21,11 @@ namespace dvg.Web
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .CreateLogger();
-
+                
             builder.Logging.ClearProviders();
             builder.Logging.AddSerilog(logger);
 
-            
             // Add services to the container.
-            builder.Services.AddSingleton<Serilog.ILogger>(logger);
-            
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddDbContext<ApplicationContext>(options =>

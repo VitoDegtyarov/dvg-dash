@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using dvg.Data.Entities;
 using dvg.Data.UnitOfWork;
-using dvg.Services.DTO;
+using dvg.DTO;
 using dvg.Services.Interfaces;
 using Serilog;
 

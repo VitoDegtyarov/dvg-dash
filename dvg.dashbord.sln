@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dvg.Services", "dvg.Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dvg.Mappers", "dvg.Mappers\dvg.Mappers.csproj", "{93E6293C-BC99-4BD2-AF8B-31559C294BD9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dvg.Services.DTO", "dvg.DTO\dvg.Services.DTO.csproj", "{5D7E9F07-05AB-458A-9C8B-16B354524788}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dvg.DTO", "dvg.DTO\dvg.DTO.csproj", "{5D7E9F07-05AB-458A-9C8B-16B354524788}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dvg.Tests", "dvg.Tests\dvg.Tests.csproj", "{E21FE097-448B-4048-AF4D-8B67AB17E1BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dvg.Tests", "dvg.Tests\dvg.Tests.csproj", "{E21FE097-448B-4048-AF4D-8B67AB17E1BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

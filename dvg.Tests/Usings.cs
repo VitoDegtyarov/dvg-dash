@@ -6,5 +6,5 @@ global using dvg.Data.Repositories.Interfaces;
 global using dvg.Data.UnitOfWork;
 global using dvg.Mappers;
 global using dvg.Services;
-global using dvg.Services.DTO;
+global using dvg.DTO;
 global using Moq;
