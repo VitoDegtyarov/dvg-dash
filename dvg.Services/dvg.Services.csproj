@@ -15,7 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\dvg.Core\dvg.Core.csproj" />
     <ProjectReference Include="..\dvg.Data\dvg.Data.csproj" />
-    <ProjectReference Include="..\dvg.DTO\dvg.DTO.csproj" />
+    <ProjectReference Include="..\dvg.DTO\dvg.Dto.csproj" />
   </ItemGroup>
 
 </Project>

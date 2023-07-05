@@ -1,8 +1,8 @@
 ﻿using dvg.Core.Enums;
 
-namespace dvg.DTO
+namespace dvg.Dto
 {
-    public class DesignerDTO
+    public class DesignerDto
     {
         public string? FirstName { get; set; } 
         public string? LastName { get; set; }

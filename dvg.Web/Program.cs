@@ -53,6 +53,7 @@ namespace dvg.Web
                 app.UseHsts();
             }
 
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

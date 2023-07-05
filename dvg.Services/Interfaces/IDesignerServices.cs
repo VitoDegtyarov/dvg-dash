@@ -1,12 +1,12 @@
-﻿using dvg.DTO;
+﻿using dvg.Dto;
 
 namespace dvg.Services.Interfaces
 {
     public interface IDesignerServices
     {
-        Task InsertAsync(DesignerDTO designer);
+        Task InsertAsync(DesignerDto designer);
 
-        Task<List<DesignerDTO>> GetAllAsync();
-        Task<DesignerDTO> GetByIdAsync(Guid id);
+        Task<List<DesignerDto>> GetAllAsync();
+        Task<DesignerDto> GetByIdAsync(Guid id);
     }
 }

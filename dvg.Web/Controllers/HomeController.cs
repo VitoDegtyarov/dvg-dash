@@ -1,7 +1,6 @@
 ﻿using dvg.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Serilog;
 
 namespace dvg.Web.Controllers
 {

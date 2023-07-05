@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using dvg.Data.Entities;
 using dvg.Data.UnitOfWork;
-using dvg.DTO;
+using dvg.Dto;
 using dvg.Services.Interfaces;
 using Serilog;
 
@@ -21,25 +21,25 @@ namespace dvg.Services
             
         }
 
-        public async Task<List<DesignerDTO>> GetAllAsync()
+        public async Task<List<DesignerDto>> GetAllAsync()
         {
             var data = await _unitOfWork.DesignerRepository.GetAllAsync();
 
-            List<DesignerDTO> result = _mapper.Map<List<DesignerDTO>>(data);
+            List<DesignerDto> result = _mapper.Map<List<DesignerDto>>(data);
 
             return result;
         }
 
-        public async Task<DesignerDTO> GetByIdAsync(Guid id)
+        public async Task<DesignerDto> GetByIdAsync(Guid id)
         {
             var data = await _unitOfWork.DesignerRepository.GetByIdAsync(id);
 
-            var result = _mapper.Map<DesignerDTO>(data);
+            var result = _mapper.Map<DesignerDto>(data);
 
             return result;
         }
 
-        public async Task InsertAsync(DesignerDTO? designerDTO)
+        public async Task InsertAsync(DesignerDto? designerDTO)
         {
             if (designerDTO != null)
             {
@@ -51,7 +51,7 @@ namespace dvg.Services
             await _unitOfWork.SaveChanges();
         }
 
-        public async Task DeleteDesignerAsync(DesignerDTO designerDTO)
+        public async Task DeleteDesignerAsync(DesignerDto designerDTO)
         {
              _unitOfWork.DesignerRepository.Delete(_mapper.Map<Designer>(designerDTO));
 

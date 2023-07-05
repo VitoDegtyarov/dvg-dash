@@ -37,7 +37,7 @@ namespace dvg.Tests
                                         new Designer { FirstName = "Boby", LastName = "Sinclar"}
                                     });
 
-            List<DesignerDTO> result = await _designerService.GetAllAsync();
+            List<DesignerDto> result = await _designerService.GetAllAsync();
 
             Assert.NotNull(result);
             Assert.Equal(2, result.Count);
@@ -81,7 +81,7 @@ namespace dvg.Tests
             _unitOfWorkMock.Setup(uow => uow.DesignerRepository.InsertAsync(It.IsAny<Designer>()))
                                     .Returns(Task.CompletedTask);
 
-            var designerDTO = new DesignerDTO
+            var designerDTO = new DesignerDto
             {
                 FirstName = "Kevin",
                 LastName = "McCallister",
@@ -98,7 +98,7 @@ namespace dvg.Tests
         [Fact]
         public async Task InsertAsync_WithNullValue()
         {
-            DesignerDTO? designerDTO = null;
+            DesignerDto? designerDTO = null;
 
             _unitOfWorkMock.Setup(uow => uow.DesignerRepository.InsertAsync(It.IsNotNull<Designer>()))
                                    .Throws<InvalidOperationException>();
@@ -111,7 +111,7 @@ namespace dvg.Tests
         [Fact]
         public async Task DeleteDesignerAsync()
         {
-            var designerDTO = new DesignerDTO { FirstName = "John", LastName = "Doe" };
+            var designerDTO = new DesignerDto { FirstName = "John", LastName = "Doe" };
 
             _unitOfWorkMock.SetupGet(uow => uow.DesignerRepository).Returns(Mock.Of<IDesignerRepository>());
 
