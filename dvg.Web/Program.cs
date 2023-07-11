@@ -37,7 +37,14 @@ namespace dvg.Web
                 return new Lazy<IDesignerRepository>(() => provider.GetRequiredService<IDesignerRepository>());
             });
 
+            builder.Services.AddScoped<IClientRepository, ClientRepository>();
+            builder.Services.AddScoped<Lazy<IClientRepository>>(provider =>
+            {
+                return new Lazy<IClientRepository>(() => provider.GetRequiredService<IClientRepository>());
+            });
+
             builder.Services.AddScoped<IDesignerService, DesignerService>();
+            builder.Services.AddScoped<IClientService, ClientService>();
 
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

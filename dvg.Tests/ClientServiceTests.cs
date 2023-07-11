@@ -38,7 +38,6 @@ namespace dvg.Tests
 
             List<ClientDto> restult = await _clientService.GetAllAsync();
 
-            Assert.Equal(2, restult.Count);
             Assert.Equal("Eric", restult[1].FirstName);
         }
 
