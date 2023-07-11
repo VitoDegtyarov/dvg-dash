@@ -16,15 +16,6 @@ namespace dvg.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            var logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(builder.Configuration)
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .CreateLogger();
-                
-            builder.Logging.ClearProviders();
-            builder.Logging.AddSerilog(logger);
-
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -72,7 +63,7 @@ namespace dvg.Web
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            logger.Information("App run");
+           
 
             app.Run();
 

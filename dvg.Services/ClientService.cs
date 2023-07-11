@@ -3,7 +3,6 @@ using dvg.Data.Entities;
 using dvg.Data.UnitOfWork;
 using dvg.Dto;
 using dvg.Services.Interfaces;
-using Serilog;
 
 namespace dvg.Services
 {
@@ -11,12 +10,10 @@ namespace dvg.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
-        public ClientService(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public ClientService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _logger = logger;
         }
         public async Task<List<ClientDto>> GetAllAsync()
         {
@@ -42,7 +39,6 @@ namespace dvg.Services
             {
                 await _unitOfWork.ClientRepository.InsertAsync(_mapper.Map<Client>(client));
 
-                _logger.Information($"Added: {typeof(ClientDto)} - {client.FirstName} {client.LastName}");
             }
         }
 

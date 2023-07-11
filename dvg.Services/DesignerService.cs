@@ -3,7 +3,6 @@ using dvg.Data.Entities;
 using dvg.Data.UnitOfWork;
 using dvg.Dto;
 using dvg.Services.Interfaces;
-using Serilog;
 
 namespace dvg.Services
 {
@@ -11,13 +10,11 @@ namespace dvg.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
 
-        public DesignerService(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public DesignerService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _logger = logger;
             
         }
 
@@ -44,8 +41,6 @@ namespace dvg.Services
             if (designer != null)
             {
                 await _unitOfWork.DesignerRepository.InsertAsync(_mapper.Map<Designer>(designer));
-
-                _logger.Information($"Added to DB:  Name:{designer.FirstName} - {designer.LastName}");
             }
 
             await _unitOfWork.SaveChanges();
@@ -56,8 +51,6 @@ namespace dvg.Services
              _unitOfWork.DesignerRepository.Delete(_mapper.Map<Designer>(designerDTO));
 
             await _unitOfWork.SaveChanges();
-
-            _logger.Information($"Delete from DB: Name: {designerDTO.FirstName} - {designerDTO.LastName}");
         }
     }
 }

@@ -1,16 +1,12 @@
 ﻿using dvg.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using ILogger = Serilog.ILogger;
-
 namespace dvg.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger _logger;
-        public HomeController(ILogger logger)
+        public HomeController()
         {
-            _logger = logger;
         }
 
         public IActionResult Index()
