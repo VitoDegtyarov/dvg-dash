@@ -6,7 +6,7 @@ namespace dvg.Tests
     {
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
-        private readonly DesignerServices _designerService;
+        private readonly DesignerService _designerService;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
 
         public DesignerServicesTests()
@@ -23,7 +23,7 @@ namespace dvg.Tests
 
             _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-            _designerService = new DesignerServices(_unitOfWorkMock.Object, _mapper, _logger);
+            _designerService = new DesignerService(_unitOfWorkMock.Object, _mapper, _logger);
 
         }
 

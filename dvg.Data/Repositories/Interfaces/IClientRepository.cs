@@ -2,7 +2,8 @@
 
 namespace dvg.Data.Repositories.Interfaces
 {
-    internal interface IClientRepository : IRepositoryBase<Client>
+    public interface IClientRepository : IRepositoryBase<Client>
     {
+        Task<Client> GetByIdAsync(Guid id);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace dvg.Services.Interfaces
 {
-    public interface IDesignerServices
+    public interface IDesignerService
     {
         Task InsertAsync(DesignerDto designer);
 

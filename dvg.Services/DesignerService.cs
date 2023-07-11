@@ -7,13 +7,13 @@ using Serilog;
 
 namespace dvg.Services
 {
-    public class DesignerServices : IDesignerServices
+    public class DesignerService : IDesignerService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public DesignerServices(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
+        public DesignerService(IUnitOfWork unitOfWork, IMapper mapper, ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -39,13 +39,13 @@ namespace dvg.Services
             return result;
         }
 
-        public async Task InsertAsync(DesignerDto? designerDTO)
+        public async Task InsertAsync(DesignerDto? designer)
         {
-            if (designerDTO != null)
+            if (designer != null)
             {
-                await _unitOfWork.DesignerRepository.InsertAsync(_mapper.Map<Designer>(designerDTO));
+                await _unitOfWork.DesignerRepository.InsertAsync(_mapper.Map<Designer>(designer));
 
-                _logger.Information($"Added to DB:  Name:{designerDTO.FirstName} - {designerDTO.LastName}");
+                _logger.Information($"Added to DB:  Name:{designer.FirstName} - {designer.LastName}");
             }
 
             await _unitOfWork.SaveChanges();

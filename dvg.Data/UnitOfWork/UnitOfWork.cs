@@ -6,16 +6,20 @@ namespace dvg.Data.UnitOfWork
     {
         private readonly ApplicationContext _context;
         private readonly Lazy<IDesignerRepository> _designerRepository;
+        private readonly Lazy<IClientRepository> _clientRepository;
 
         public UnitOfWork(
             ApplicationContext context, 
-            Lazy<IDesignerRepository> designerRepository)
+            Lazy<IDesignerRepository> designerRepository,
+            Lazy<IClientRepository> clientRepository)
         {
             _context = context;
             _designerRepository = designerRepository;
+            _clientRepository = clientRepository;
         }
 
         public IDesignerRepository DesignerRepository => _designerRepository.Value;
+        public IClientRepository ClientRepository => _clientRepository.Value;
 
         public async Task SaveChanges()
         {
