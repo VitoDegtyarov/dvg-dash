@@ -4,7 +4,6 @@ namespace dvg.Tests
 {
     public class DesignerServicesTests
     {
-        private readonly ILogger _logger;
         private readonly IMapper _mapper;
         private readonly DesignerService _designerService;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
@@ -16,14 +15,10 @@ namespace dvg.Tests
                 cfg.AddProfile<AppMappingProfile>();
             });
 
-            _logger = new LoggerConfiguration()
-                .CreateLogger();
-
             _mapper = mapperConfig.CreateMapper();
-
             _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-            _designerService = new DesignerService(_unitOfWorkMock.Object, _mapper, _logger);
+            _designerService = new DesignerService(_unitOfWorkMock.Object, _mapper);
 
         }
 
@@ -120,7 +115,6 @@ namespace dvg.Tests
             _unitOfWorkMock.Verify(uow => uow.DesignerRepository.Delete(It.IsAny<Designer>()), Times.Once);
             _unitOfWorkMock.Verify(uow => uow.SaveChanges(), Times.Once);
         }
-
     }
 
 }

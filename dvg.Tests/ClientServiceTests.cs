@@ -23,7 +23,7 @@ namespace dvg.Tests
 
             _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-            _clientService = new ClientService(_unitOfWorkMock.Object, _mapper, _logger);
+            _clientService = new ClientService(_unitOfWorkMock.Object, _mapper);
         }
 
         [Fact]

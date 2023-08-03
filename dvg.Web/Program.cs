@@ -7,6 +7,8 @@ using dvg.Services;
 using dvg.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Serilog.Events;
+
 
 namespace dvg.Web
 {
@@ -15,6 +17,20 @@ namespace dvg.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+                .CreateBootstrapLogger();
+
+            builder.Host.UseSerilog((context, services, configuration) => configuration
+                .ReadFrom.Configuration(context.Configuration)
+                .ReadFrom.Services(services)
+                .Enrich.FromLogContext()
+                .WriteTo.Console());
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -51,6 +67,7 @@ namespace dvg.Web
                 app.UseHsts();
             }
 
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -63,11 +80,11 @@ namespace dvg.Web
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-           
+
 
             app.Run();
 
-            
+
 
         }
     }

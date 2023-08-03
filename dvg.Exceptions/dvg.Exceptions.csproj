@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\dvg.DTO\dvg.Dto.csproj" />
+    <ProjectReference Include="..\dvg.Web\dvg.Web.csproj" />
+  </ItemGroup>
+
 </Project>
