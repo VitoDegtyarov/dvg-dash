@@ -33,7 +33,6 @@
     <ProjectReference Include="..\dvg.DTO\dvg.Dto.csproj" />
     <ProjectReference Include="..\dvg.Mappers\dvg.Mappers.csproj" />
     <ProjectReference Include="..\dvg.Services\dvg.Services.csproj" />
-    <ProjectReference Include="..\dvg.Web\dvg.Web.csproj" />
   </ItemGroup>
 
 </Project>
