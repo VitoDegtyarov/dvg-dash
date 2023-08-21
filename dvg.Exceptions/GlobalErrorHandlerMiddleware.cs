@@ -35,7 +35,7 @@ namespace dvg.Exceptions
         {
             _logger.Error(exMsg);
 
-            HttpResponse response = context.Response;
+            var response = context.Response;
 
             response.ContentType = "application/json";
             response.StatusCode = (int)httpStatusCode;

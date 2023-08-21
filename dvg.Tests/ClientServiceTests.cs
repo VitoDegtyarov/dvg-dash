@@ -4,8 +4,6 @@ namespace dvg.Tests
 {
     public class ClientServiceTests
     {
-        private readonly ILogger _logger;
-        private readonly IMapper _mapper;
         private readonly ClientService _clientService;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
 
@@ -16,29 +14,29 @@ namespace dvg.Tests
                 cfg.AddProfile<AppMappingProfile>();
             });
 
-            _logger = new LoggerConfiguration()
+            ILogger logger = new LoggerConfiguration()
                 .CreateLogger();
 
-            _mapper = mapperConfig.CreateMapper();
+            var mapper = mapperConfig.CreateMapper();
 
             _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-            _clientService = new ClientService(_unitOfWorkMock.Object, _mapper, _logger);
+            _clientService = new ClientService(_unitOfWorkMock.Object, mapper, logger);
         }
 
         [Fact]
-        public async Task GetAllClinetAsync()
+        public async Task GetAllClientAsync()
         {
             _unitOfWorkMock.Setup(repo => repo.ClientRepository.GetAllAsync())
                                     .ReturnsAsync(new List<Client>()
                                     {
                                         new Client { FirstName = "Victor" , LastName = "Dino" },
-                                        new Client { FirstName = "Eric", LastName = "Volkanovich"}
+                                        new Client { FirstName = "Eric", LastName = "Volcanically"}
                                     });
 
-            List<ClientDto> restult = await _clientService.GetAllAsync();
+            var result = await _clientService.GetAllAsync();
 
-            Assert.Equal("Eric", restult[1].FirstName);
+            Assert.Equal("Eric", result[1].FirstName);
         }
 
         [Fact]

@@ -2,8 +2,8 @@
 {
     public class BaseEntity
     {
-        public Guid Id { get; set; }
-        public DateTime CreateDate { get; set; }
+        public Guid Id { get; init; }
+        public DateTime CreateDate { get; init; }
         public DateTime? UpdateDate { get; set; }
 
     }

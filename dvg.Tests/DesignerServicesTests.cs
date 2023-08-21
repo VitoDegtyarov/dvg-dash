@@ -4,8 +4,6 @@ namespace dvg.Tests
 {
     public class DesignerServicesTests
     {
-        private readonly ILogger _logger;
-        private readonly IMapper _mapper;
         private readonly DesignerService _designerService;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
 
@@ -16,14 +14,14 @@ namespace dvg.Tests
                 cfg.AddProfile<AppMappingProfile>();
             });
 
-            _logger = new LoggerConfiguration()
+            ILogger logger = new LoggerConfiguration()
                 .CreateLogger();
 
-            _mapper = mapperConfig.CreateMapper();
+            var mapper = mapperConfig.CreateMapper();
 
             _unitOfWorkMock = new Mock<IUnitOfWork>();
 
-            _designerService = new DesignerService(_unitOfWorkMock.Object, _mapper, _logger);
+            _designerService = new DesignerService(_unitOfWorkMock.Object, mapper, logger);
 
         }
 
@@ -34,7 +32,7 @@ namespace dvg.Tests
                                     .ReturnsAsync(new List<Designer>()
                                     {
                                         new Designer { FirstName = "John", LastName = "Silverhand"},
-                                        new Designer { FirstName = "Boby", LastName = "Sinclar"}
+                                        new Designer { FirstName = "Bob", LastName = "Sinclair"}
                                     });
 
             List<DesignerDto> result = await _designerService.GetAllAsync();
@@ -45,7 +43,7 @@ namespace dvg.Tests
         }
 
         [Fact]
-        public async Task GetDesignerByID()
+        public async Task GetDesignerById()
         {
             Designer testData = new Designer
             {
@@ -81,7 +79,7 @@ namespace dvg.Tests
             _unitOfWorkMock.Setup(uow => uow.DesignerRepository.InsertAsync(It.IsAny<Designer>()))
                                     .Returns(Task.CompletedTask);
 
-            var designerDTO = new DesignerDto
+            var designerDto = new DesignerDto
             {
                 FirstName = "Kevin",
                 LastName = "McCallister",
@@ -89,7 +87,7 @@ namespace dvg.Tests
                 PhoneNumber = "+380987894512"
             };
 
-            await _designerService.InsertAsync(designerDTO);
+            await _designerService.InsertAsync(designerDto);
 
             _unitOfWorkMock.Verify(uow => uow.DesignerRepository.InsertAsync(It.IsAny<Designer>()), Times.Once);
 
@@ -98,12 +96,12 @@ namespace dvg.Tests
         [Fact]
         public async Task InsertAsync_WithNullValue()
         {
-            DesignerDto? designerDTO = null;
+            DesignerDto? designerDto = null;
 
             _unitOfWorkMock.Setup(uow => uow.DesignerRepository.InsertAsync(It.IsNotNull<Designer>()))
                                    .Throws<InvalidOperationException>();
 
-            await _designerService.InsertAsync(designerDTO);
+            await _designerService.InsertAsync(designerDto);
 
             _unitOfWorkMock.Verify(uow => uow.DesignerRepository.InsertAsync(It.IsNotNull<Designer>()), Times.Never());
         }
@@ -111,11 +109,11 @@ namespace dvg.Tests
         [Fact]
         public async Task DeleteDesignerAsync()
         {
-            var designerDTO = new DesignerDto { FirstName = "John", LastName = "Doe" };
+            var designerDto = new DesignerDto { FirstName = "John", LastName = "Doe" };
 
             _unitOfWorkMock.SetupGet(uow => uow.DesignerRepository).Returns(Mock.Of<IDesignerRepository>());
 
-            await _designerService.DeleteDesignerAsync(designerDTO);
+            await _designerService.DeleteDesignerAsync(designerDto);
 
             _unitOfWorkMock.Verify(uow => uow.DesignerRepository.Delete(It.IsAny<Designer>()), Times.Once);
             _unitOfWorkMock.Verify(uow => uow.SaveChanges(), Times.Once);

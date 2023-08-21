@@ -21,7 +21,7 @@ namespace dvg.Data
 
         private void SetTestData(ModelBuilder modelBuilder)
         {
-            List<Designer> designers = new List<Designer>
+            var designers = new List<Designer>
             {
                 new()
                 {
@@ -45,7 +45,7 @@ namespace dvg.Data
                 }
             };
 
-            List<Client> clients = new List<Client>
+            var clients = new List<Client>
             {
                 new()
                 {
