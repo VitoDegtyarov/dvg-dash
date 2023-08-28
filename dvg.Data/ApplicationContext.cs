@@ -9,10 +9,7 @@ namespace dvg.Data
         public DbSet<Client> Clients { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
-            :base(options)
-        {
-                
-        }
+            :base(options) {}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

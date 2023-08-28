@@ -3,7 +3,6 @@ global using AutoMapper;
 global using dvg.Data.Entities;
 global using dvg.Data.Repositories;
 global using dvg.Data.Repositories.Interfaces;
-global using dvg.Data.UnitOfWork;
 global using dvg.Mappers;
 global using dvg.Services;
 global using dvg.Dto;

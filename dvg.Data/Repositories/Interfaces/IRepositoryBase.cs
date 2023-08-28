@@ -6,5 +6,6 @@
         void Delete(TEntity entityToDelete);
         Task InsertAsync(TEntity entity);
         void UpdateAsync(TEntity entityToUpdate);
+        Task SaveChanges();
     }
 }

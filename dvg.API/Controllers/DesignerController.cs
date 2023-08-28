@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dvg.API.Controllers;
 
-[Route("api/desiners")]
+[Route("api/designers")]
 [ApiController]
 public class DesignerController : ControllerBase
 {
@@ -18,6 +18,7 @@ public class DesignerController : ControllerBase
     public async Task<IActionResult> GetAllDesigners()
     {
         var designers = await _designerService.GetAllAsync();
+
         return Ok(designers);
     }
 }
