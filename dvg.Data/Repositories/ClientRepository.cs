@@ -1,15 +1,18 @@
 ﻿using dvg.Data.Entities;
 using dvg.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace dvg.Data.Repositories
 {
     public class ClientRepository : RepositoryBase<Client>, IClientRepository
     {
         private readonly ApplicationContext _context;
-        public ClientRepository(ApplicationContext context)  : base(context) 
+        private readonly ILogger _logger;
+        public ClientRepository(ApplicationContext context, ILogger logger)  : base(context, logger) 
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<Client> GetByIdAsync(Guid id)

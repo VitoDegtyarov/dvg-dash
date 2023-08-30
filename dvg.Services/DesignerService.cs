@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using dvg.Core.Exceptions;
+using dvg.Core.UpdateModels;
 using dvg.Data.Entities;
 using dvg.Data.Repositories.Interfaces;
 using dvg.Dto;
@@ -13,9 +15,9 @@ public class DesignerService : IDesignerService
     private readonly IMapper _mapper;
     private readonly ILogger _logger;
 
-    public DesignerService(IDesignerRepository deisgnerRepository, IMapper mapper, ILogger logger)
+    public DesignerService(IDesignerRepository designerRepository, IMapper mapper, ILogger logger)
     {
-        _designerRepository = deisgnerRepository;
+        _designerRepository = designerRepository;
         _mapper = mapper;
         _logger = logger;
     }
@@ -45,17 +47,47 @@ public class DesignerService : IDesignerService
         if (designer != null)
         {
             await _designerRepository.InsertAsync(_mapper.Map<Designer>(designer));
-
         }
 
-        await _designerRepository.SaveChanges();
+        _designerRepository.SaveChanges();
     }
 
-    public async Task DeleteDesignerAsync(DesignerDto designerDto)
+    public async Task DeleteDesignerAsync(Guid id)
     {
-        _designerRepository.Delete(_mapper.Map<Designer>(designerDto));
+        await _designerRepository.DeleteAsync(id);
+    }
 
-        await _designerRepository.SaveChanges();
+    public async Task UpdateDesigner(Guid id, DesignerUpdateModel updateModel)
+    {
+        try
+        {
+            var designer = await _designerRepository.GetByIdAsync(id);
 
+
+            if (!updateModel.IsEmpty())
+            {
+                if (updateModel.FirstName != null)
+                    designer.FirstName = updateModel.FirstName;
+
+                if (updateModel.LastName != null)
+                    designer.LastName = updateModel.LastName;
+
+                if (updateModel.PhoneNumber != null)
+                    designer.PhoneNumber = updateModel.PhoneNumber;
+
+                if (updateModel.Position != null)
+                    designer.Position = updateModel.Position.Value;
+
+                _designerRepository.Update(designer);
+            }
+        }
+        catch (RepositoryException ex)
+        {
+            _logger.Information("\n**** Error! ****");
+            _logger.Information($"\n**** Source: {ex.Source}");
+            _logger.Information($"\n**** Entity: {ex.EntityName}");
+            _logger.Information($"\n**** Message: {ex.Message}");
+            _logger.Information($"\n**** Method: {ex.StackTrace}");
+        }
     }
 }

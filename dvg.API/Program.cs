@@ -11,16 +11,15 @@ using Serilog.Events;
 var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration()
-    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
+    .MinimumLevel.Information()
+    .WriteTo.File("log.txt")
+    .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
     .CreateBootstrapLogger();
 
 builder.Host.UseSerilog((context, services, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration)
     .ReadFrom.Services(services)
-    .Enrich.FromLogContext()
-    .WriteTo.Console());
+    .Enrich.FromLogContext());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -42,12 +42,6 @@ namespace dvg.Services
             }
         }
 
-        public async Task DeleteClientAsync(ClientDto clientDto)
-        {
-            _clientRepository.Delete(_mapper.Map<Client>(clientDto));
-
-            await _clientRepository.SaveChanges();
-
-        }
+        
     }
 }
