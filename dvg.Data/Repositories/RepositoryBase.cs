@@ -35,10 +35,23 @@ namespace dvg.Data.Repositories
             return entity;
         }
 
-        public async Task<TEntity> GetByIdAsync(Guid id)
-        {
-            return await _context.Set<TEntity>().FindAsync(id);
-        }
+        //public async Task<TEntity> GetByIdAsync(Guid id)
+        //{
+        //    _logger.Information($"\tTry to get entity with id {id}");
+
+        //    var entity = await _context.Set<TEntity>().FindAsync(id);
+
+        //    if (entity != null)
+        //    {
+        //        _logger.Information($"\tEntity with id: {id} retrieved: {entity != null}");
+        //        return entity;
+        //    }
+        //    else
+        //    {
+        //        _logger.Information($"Cannot find entity with id: {id}");
+        //        return null;
+        //    }
+        //}
 
         public async Task<List<TEntity>> GetAllAsync()
         {
@@ -47,6 +60,7 @@ namespace dvg.Data.Repositories
 
         public void Update(TEntity entityToUpdate)
         {
+
             try
             {
                 _context.Entry(entityToUpdate).State = EntityState.Modified;

@@ -10,6 +10,6 @@ namespace dvg.Services.Interfaces
         Task<List<DesignerDto>> GetAllAsync();
         Task<DesignerDto> GetByIdAsync(Guid id);
         Task DeleteDesignerAsync(Guid id);
-        Task UpdateDesigner(Guid id, DesignerUpdateModel updateModel);
+        Task UpdateDesignerAsync(Guid id, DesignerUpdateModel updateModel);
     }
 }

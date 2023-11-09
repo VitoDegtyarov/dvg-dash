@@ -2,7 +2,6 @@
 {
     public interface IRepositoryBase<TEntity> where TEntity : class
     {
-        Task<TEntity> GetByIdAsync(Guid id);
         Task<List<TEntity>> GetAllAsync();
         Task<TEntity> DeleteAsync(Guid id);
         Task InsertAsync(TEntity entity);

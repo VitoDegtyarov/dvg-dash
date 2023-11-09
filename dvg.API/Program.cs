@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var logger = new LoggerConfiguration()
     .MinimumLevel.Information()
-    .WriteTo.File("log.txt")
+    //.WriteTo.File("log.txt")
     .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information)
     .CreateBootstrapLogger();
 

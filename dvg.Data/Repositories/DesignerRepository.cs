@@ -1,4 +1,5 @@
-﻿using dvg.Data.Entities;
+﻿using dvg.Core.Exceptions;
+using dvg.Data.Entities;
 using dvg.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -14,6 +15,11 @@ namespace dvg.Data.Repositories
         {
             _context = context;
             _logger = logger;
+        }
+
+        public async Task<Designer> GetByIdAsync(Guid id)
+        {
+            return await _context.Designers.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

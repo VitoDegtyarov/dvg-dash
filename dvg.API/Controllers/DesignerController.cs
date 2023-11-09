@@ -48,9 +48,17 @@ public class DesignerController : ControllerBase
     }
 
     [HttpPut("{id:guid}")]
-    public Task<IActionResult> UpdateDesigner(Guid id, DesignerUpdateModel updateModel)
+    public async Task<IActionResult> UpdateDesigner(Guid id, DesignerUpdateModel updateModel)
     {
-        _designerService.UpdateDesigner(id, updateModel);
-        return Task.FromResult<IActionResult>(Ok());
+        try
+        {
+            await _designerService.UpdateDesignerAsync(id, updateModel);
+            return Ok();
+        }
+        catch(Exception ex)
+        {
+            await Console.Out.WriteLineAsync(ex.Message);
+            return BadRequest();
+        }
     }
 }

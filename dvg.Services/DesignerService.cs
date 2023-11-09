@@ -57,15 +57,15 @@ public class DesignerService : IDesignerService
         await _designerRepository.DeleteAsync(id);
     }
 
-    public async Task UpdateDesigner(Guid id, DesignerUpdateModel updateModel)
+    public async Task UpdateDesignerAsync(Guid id, DesignerUpdateModel updateModel)
     {
         try
         {
-            var designer = await _designerRepository.GetByIdAsync(id);
-
 
             if (!updateModel.IsEmpty())
             {
+                var designer = await _designerRepository.GetByIdAsync(id);
+
                 if (updateModel.FirstName != null)
                     designer.FirstName = updateModel.FirstName;
 
